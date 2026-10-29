@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { X, Send, Bot, User, Minus } from "lucide-react";
 import { sendMessage } from "../services/chat.service.js";
+import ReactMarkdown from "react-markdown";
 
 const quickQuestions = [
   "What courses do you offer?",
@@ -92,7 +93,42 @@ export default function ChatDrawer({ open, onClose }) {
                 ? "bg-maroon text-white rounded-br-sm"
                 : "bg-white text-gray-800 border border-gray-200 rounded-bl-sm shadow-sm"
             }`}>
-              {msg.text}
+              {msg.sender === "bot" ? (
+  <ReactMarkdown
+    components={{
+      p: ({ children }) => (
+        <p className="mb-2 last:mb-0">{children}</p>
+      ),
+      h1: ({ children }) => (
+        <h3 className="text-base font-bold mb-2">{children}</h3>
+      ),
+      h2: ({ children }) => (
+        <h3 className="text-sm font-bold mb-2">{children}</h3>
+      ),
+      h3: ({ children }) => (
+        <h4 className="font-bold mb-1">{children}</h4>
+      ),
+      ul: ({ children }) => (
+        <ul className="list-disc pl-5 mb-2 space-y-1">
+          {children}
+        </ul>
+      ),
+      ol: ({ children }) => (
+        <ol className="list-decimal pl-5 mb-2 space-y-1">
+          {children}
+        </ol>
+      ),
+      li: ({ children }) => <li>{children}</li>,
+      strong: ({ children }) => (
+        <strong className="font-bold">{children}</strong>
+      ),
+    }}
+  >
+    {msg.text}
+  </ReactMarkdown>
+) : (
+  msg.text
+)}
             </div>
             {msg.sender === "user" && (
               <div className="w-6 h-6 bg-gray-300 rounded-full flex items-center justify-center flex-shrink-0">
