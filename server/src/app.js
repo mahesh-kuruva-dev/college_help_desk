@@ -1,6 +1,10 @@
+
 import express from "express";
 import cors from "cors";
+import cookieParser from "cookie-parser";
+
 import chatRoutes from "./routes/chat.routes.js";
+import authRoutes from "./routes/auth.routes.js";
 import errorHandler from "./middleware/error-handler.middleware.js";
 
 const app = express();
@@ -10,22 +14,29 @@ app.use(
   cors({
     origin: process.env.CLIENT_URL || "http://localhost:5173",
     credentials: true,
-    methods: ["POST"],
+    methods: ["GET", "POST", "OPTIONS"],
     allowedHeaders: ["Content-Type"],
   })
 );
+
 app.use(express.json({ limit: "10mb" }));
+app.use(cookieParser());
 
 // Routes
 app.use("/api/chat", chatRoutes);
+app.use("/api/auth", authRoutes);
 
-// 404
+// 404 handler
 app.use((req, res) => {
-  res.status(404).json({ success: false, message: "Route not found." });
+  res.status(404).json({
+    success: false,
+    message: "Route not found.",
+  });
 });
 
-// Global error handler (must be last)
+// Global error handler — must be last
 app.use(errorHandler);
 
 export default app;
+
 

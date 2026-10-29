@@ -33,12 +33,12 @@ export default function Navbar() {
 
         {/* Desktop buttons (UI only) */}
         <div className="hidden md:flex items-center gap-3">
-          <button className="text-sm text-maroon font-medium hover:text-maroon-dark transition-colors duration-200">
-            Login
-          </button>
-          <button className="text-sm bg-maroon text-white px-4 py-2 rounded-lg hover:bg-maroon-dark transition-colors duration-200">
-            Sign Up
-          </button>
+        <Link to="/login" className="text-sm text-maroon font-medium hover:text-maroon-dark">
+         Login
+         </Link>
+         <Link to="/signup" className="text-sm bg-maroon text-white px-4 py-2 rounded-lg hover:bg-maroon-dark">
+          Sign Up
+         </Link>
         </div>
 
         {/* Mobile hamburger */}
